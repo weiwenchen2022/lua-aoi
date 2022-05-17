@@ -52,6 +52,12 @@ static int lupdate(lua_State *L)
     return 0;
 }
 
+static int finishmessage(lua_State *L, int status, lua_KContext ctx)
+{
+    (void)L; (void)status; (void)ctx;
+    return LUA_OK;
+}
+
 static void message(void *ud, uint32_t watcher, uint32_t marker)
 {
     laoi_userdata *aoiu = (laoi_userdata *)ud;
@@ -61,8 +67,7 @@ static void message(void *ud, uint32_t watcher, uint32_t marker)
     lua_pushvalue(L, 3);
     lua_pushinteger(L, watcher);
     lua_pushinteger(L, marker);
-
-    lua_callk(L, 3, 0, 0, NULL);
+    lua_callk(L, 3, 0, 0, finishmessage);
 }
 
 static int lmessage(lua_State *L)
