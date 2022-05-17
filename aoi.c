@@ -10,7 +10,7 @@
 #define AOI_RADIS 10.0f
 #define AOI_RADIS2 (AOI_RADIS * AOI_RADIS)
 
-#define INVALID_ID (~0)
+#define INVALID_ID (uint32_t)(~0)
 #define PRE_ALLOC 16
 
 #define DIST2(p1, p2) ( \

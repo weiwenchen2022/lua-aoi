@@ -1,17 +1,19 @@
-CC ?= gcc
-CFLAGS = -g -O2 -Wall -I$(LUA_INC)
-SHARED := -fPIC --shared
-
+CC = gcc
+CFLAGS = $(LUA_INC:%=-I%) -Wall -Wshadow -Wextra \
+	 -Wimplicit -O2 -ggdb3 -fpic
 LUA_INC = /usr/include/lua
+
+LD = gcc
+LDFLAGS = -O -shared -fpic
 
 .PHONY : all
 all : \
 	aoi.so \
-	test \
-	testmap
+	# test \
+	# testmap
 
-aoi.so : lua-aoi.c aoi.c
-	$(CC) $(CFLAGS) $(SHARED) -I$(LUA_INC) -o $@ $^
+aoi.so : lua-aoi.o aoi.o
+	$(LD) $(LDFLAGS) -o $@ $^
 
 test : test.o aoi.o
 	$(CC) $(CFLAGS) -o $@ $^
@@ -19,10 +21,10 @@ test : test.o aoi.o
 testmap : testmap.o
 	$(CC) $(CFLAGS) -o $@ $^
 
-testmap.o : testmap.c aoi.c aoi.h
-
-test.o : test.c aoi.h
+# List of dependencies
 aoi.o : aoi.c aoi.h
+test.o : test.c aoi.h
+testmap.o : testmap.c aoi.c aoi.h
 
 .PHONY : clean
 clean :
