@@ -6,11 +6,11 @@ LUA_INC = /usr/include/lua
 LD = gcc
 LDFLAGS = -O -shared -fpic
 
-.PHONY : all
+.PHONY : all clean
 all : \
 	aoi.so \
-	# test \
-	# testmap
+	test \
+	testmap
 
 aoi.so : lua-aoi.o aoi.o
 	$(LD) $(LDFLAGS) -o $@ $^
@@ -26,6 +26,5 @@ aoi.o : aoi.c aoi.h
 test.o : test.c aoi.h
 testmap.o : testmap.c aoi.c aoi.h
 
-.PHONY : clean
 clean :
 	rm -f aoi.so test testmap *.o
