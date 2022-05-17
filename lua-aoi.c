@@ -62,7 +62,7 @@ static void message(void *ud, uint32_t watcher, uint32_t marker)
     lua_pushinteger(L, watcher);
     lua_pushinteger(L, marker);
 
-    lua_call(L, 3, 0);
+    lua_callk(L, 3, 0, 0, NULL);
 }
 
 static int lmessage(lua_State *L)
